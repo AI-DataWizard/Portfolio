@@ -153,7 +153,7 @@ a:hover {
 /*Home Section*/
 
 .home .row {
-  background: url(/assets/IMG-20230930-WA0015.jpg);
+  background: url("IMG-20230930-WA0015.jpg");
   background-repeat: no-repeat;
   background-size: 60rem;
   background-position-x: right;
@@ -618,7 +618,7 @@ a:hover {
 
 @media (max-width: 1200px) {
   .home .row {
-    background: url(/assets/pic1.png);
+    background: url("pic1.png");
     background-repeat: no-repeat;
     background-size: 55rem;
     background-position-x: right;

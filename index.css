@@ -710,7 +710,7 @@ a:hover {
 
   @media (max-width: 768px) {
     .home .row {
-      background-position-x: center;
+      display:none;
     }
   }
 }

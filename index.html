@@ -547,6 +547,10 @@
       $(".header").removeClass("scrolled");
     }
 
+    if ($(".header").hasClass(".scrolled") && $(".header .navbar").hasClass("tog")){
+      closeNav();
+    }
+
   }, 50)); // 50ms debounce — smooth but responsive
 
   // Keep skill animation on a separate, undebounced scroll listener

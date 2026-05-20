@@ -1250,6 +1250,24 @@ img { max-width: 100%; display: block; }
     border-color: var(--accent) !important;
     color: #fff !important;
   }
+   
+/* Hide the checkbox itself */
+.nav-toggle-input {
+  display: none;
+}
+
+/* Show X icon when checked */
+.nav-toggle-input:checked + .icon i {
+  /* FontAwesome swap via content */
+}
+.nav-toggle-input:checked ~ .navbar {
+  top: 6rem; /* slide nav down */
+}
+
+/* Optional: show X character when open */
+.nav-toggle-input:checked + .icon i::before {
+  content: "\f00d"; /* FontAwesome fa-xmark unicode */
+}
 
   /* Hero adjustments */
   .hero-content { padding: 0 2rem; padding-top: 11rem; }

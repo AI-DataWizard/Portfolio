@@ -522,7 +522,7 @@
     var currentScroll = $(this).scrollTop();
 
     // Close nav if open and user scrolls
-    if (Math.abs(currentScroll - lastScroll) > 10) {
+    if (Math.abs(currentScroll - lastScroll) < 10) {
       closeNav();
     }
     lastScroll = currentScroll;

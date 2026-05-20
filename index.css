@@ -173,13 +173,20 @@ img { max-width: 100%; display: block; }
 }
 .logo-dot { color: var(--accent); }
 
-.navbar {
-   width: 100%;
-   z-index: 1000;
-   position: fixed;
-   op:2.4rem;
-   right:2rem;
+  .navbar {
+    position: fixed;
+    top: 2.4rem;
+    right: 2rem;
+    width: 100%;
+    background: transparent;
+    z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
   }
+
 
 .navbar ul {
   display: flex;

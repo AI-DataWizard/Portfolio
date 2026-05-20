@@ -517,23 +517,39 @@
   });
 
   // Close on scroll (more than 10px movement)
-  var lastScroll = 0;
-  $(window).scroll(function () {
-    var currentScroll = $(this).scrollTop();
+  // Debounce utility — prevents scroll firing too rapidly
+  function debounce(fn, delay) {
+    var timer;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(fn, delay);
+    };
+  }
 
-    // Close nav if open and user scrolls
-    if (Math.abs(currentScroll - lastScroll) < 10) {
+  var lastScroll = $(window).scrollTop();
+
+  $(window).scroll(debounce(function () {
+    var currentScroll = $(window).scrollTop();
+    var delta = Math.abs(currentScroll - lastScroll);
+
+    // ONLY close nav if: nav is open AND real scroll movement happened
+    if ($(".header .navbar").hasClass("tog") && delta > 10) {
       closeNav();
     }
+
     lastScroll = currentScroll;
 
-    // Scrolled header background
+    // Scrolled header class — completely separate, no nav interaction
     if (currentScroll > 50) {
       $(".header").addClass("scrolled");
     } else {
       $(".header").removeClass("scrolled");
     }
-  });
+
+  }, 50)); // 50ms debounce — smooth but responsive
+
+  // Keep skill animation on a separate, undebounced scroll listener
+  $(window).scroll(animateSkills);
 
   // Close nav if user clicks outside of it
   $(document).click(function (e) {

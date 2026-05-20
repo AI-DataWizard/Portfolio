@@ -491,33 +491,32 @@
     <script>
      $(document).ready(function () {
 
-  /* ── MOBILE NAV TOGGLE ── */
+  var isNavOpen = false; // single source of truth
+
   function openNav() {
+    isNavOpen = true;
     $(".header .navbar").addClass("tog");
     $(".icon i").removeClass("fa-bars").addClass("fa-xmark");
   }
 
   function closeNav() {
+    isNavOpen = false;
     $(".header .navbar").removeClass("tog");
     $(".icon i").removeClass("fa-xmark").addClass("fa-bars");
   }
 
-  // Hamburger / X click
-  $(".icon").click(function () {
-    if ($(".header .navbar").hasClass("tog")) {
-      closeNav();
-    } else {
-      openNav();
-    }
+  // Hamburger click — stopPropagation prevents bubbling to $(document)
+  $(".icon").click(function (e) {
+    e.stopPropagation();
+    isNavOpen ? closeNav() : openNav();
   });
 
-  // Close on ANY nav link click (not just home)
+  // Close on any nav link click
   $(".navbar ul li a").click(function () {
     closeNav();
   });
 
-  // Close on scroll (more than 10px movement)
-  // Debounce utility — prevents scroll firing too rapidly
+  // Debounce utility
   function debounce(fn, delay) {
     var timer;
     return function () {
@@ -529,29 +528,27 @@
   var lastScroll = $(window).scrollTop();
 
   $(window).scroll(debounce(function () {
-  var currentScroll = $(window).scrollTop();
-  var delta = Math.abs(currentScroll - lastScroll);
-  lastScroll = currentScroll; // ← update FIRST, before any conditionals
+    var currentScroll = $(window).scrollTop();
+    var delta = Math.abs(currentScroll - lastScroll);
+    lastScroll = currentScroll; // always update first
 
-  // Close nav only if: open AND genuine scroll movement
-  if ($(".header .navbar").hasClass("tog") && delta > 10) {
-    closeNav();
-  }
+    // Use the FLAG — no DOM query, immune to layout shift
+    if (isNavOpen && delta > 8) {
+      closeNav();
+    }
 
-  // Header scroll class — NO closeNav() call here at all
-  if (currentScroll > 50) {
-    $(".header").addClass("scrolled");
-  } else {
-    $(".header").removeClass("scrolled");
-  }
-}, 50));
+    // Scrolled header — completely independent, no nav logic here
+    if (currentScroll > 50) {
+      $(".header").addClass("scrolled");
+    } else {
+      $(".header").removeClass("scrolled");
+    }
 
-  // Keep skill animation on a separate, undebounced scroll listener
-  $(window).scroll(animateSkills);
+  }, 40));
 
-  // Close nav if user clicks outside of it
+  // Close on outside click — stopPropagation on .icon prevents double-fire
   $(document).click(function (e) {
-    if (!$(e.target).closest(".header").length) {
+    if (isNavOpen && !$(e.target).closest(".header").length) {
       closeNav();
     }
   });
@@ -568,7 +565,7 @@
     $(this).addClass("active").siblings().removeClass("active");
   });
 
-  /* ── ANIMATE SKILL BARS ON SCROLL ── */
+  /* ── SKILL BAR ANIMATION ── */
   function animateSkills() {
     $(".skill-fill").each(function () {
       var pos = $(this).closest(".skill-item").offset().top;

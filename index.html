@@ -15,21 +15,28 @@
   <body>
 
     <!-- ===== HEADER ===== -->
-    <header class="header fixed-top">
-      <a href="#home" class="logo">TC<span class="logo-dot">.</span></a>
-      <div class="icon"><i class="fas fa-bars"></i></div>
-      <nav class="navbar">
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#service">Services</a></li>
-          <li><a href="#experience">Timeline</a></li>
-          <li><a href="#portfolio">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="https://www.linkedin.com/in/tadiwanashe-chopamba-9b80b5289" target="_blank" class="nav-cta">Hire Me</a></li>
-        </ul>
-      </nav>
-    </header>
+  <header class="header fixed-top">
+  <a href="#home" class="logo">TC<span class="logo-dot">.</span></a>
+
+  <!-- Hidden checkbox — the CSS toggle mechanism -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
+  <label for="nav-toggle" class="icon" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </label>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="#home" onclick="document.getElementById('nav-toggle').checked=false">Home</a></li>
+      <li><a href="#about" onclick="document.getElementById('nav-toggle').checked=false">About</a></li>
+      <li><a href="#service" onclick="document.getElementById('nav-toggle').checked=false">Services</a></li>
+      <li><a href="#experience" onclick="document.getElementById('nav-toggle').checked=false">Timeline</a></li>
+      <li><a href="#portfolio" onclick="document.getElementById('nav-toggle').checked=false">Projects</a></li>
+      <li><a href="#contact" onclick="document.getElementById('nav-toggle').checked=false">Contact</a></li>
+      <li><a href="https://www.linkedin.com/in/tadiwanashe-chopamba-9b80b5289" target="_blank" class="nav-cta">Hire Me</a></li>
+    </ul>
+  </nav>
+</header>
+
     <!-- ===== /HEADER ===== -->
 
     <!-- ===== HERO SECTION ===== -->

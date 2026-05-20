@@ -175,7 +175,7 @@ img { max-width: 100%; display: block; }
 
   .navbar {
     position: fixed;
-    top: 2.4rem;
+    top: 1.25rem;
     right: 2rem;
     width: 100%;
     background: transparent;
@@ -189,11 +189,12 @@ img { max-width: 100%; display: block; }
 
 .navbar ul {
   position: fixed; 
-  top: 1.5rem;
+  top: 1.25rem;
   right: 2rem;
   z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
 }
 

@@ -1187,43 +1187,43 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 768px) {
-  .header { padding: 1.6rem 2rem; }
+   /* Mobile Nav */
+   .header { padding: 1.6rem 2rem; }
 
-  /* Show hamburger icon */
   .fa-bars, .fa-xmark { display: block; }
 
-  /* Fullscreen slide-down nav */
-  .header .navbar {
+  /* Navbar is now a sibling of header, not a child */
+  /* position:fixed now works correctly — references the viewport */
+  .navbar {
     position: fixed;
-    top: -120%;
+    top: 0;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 6rem);
+    height: 100vh;
     background: var(--navy);
-    border-top: 1px solid var(--border);
+    z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 999;
-    overflow-y: auto; /* handles very small screens */
+    transform: translateX(-100%); /* slide from left instead of top */
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
   }
 
-  .header .navbar.tog { top: 6rem; }
+  .navbar.tog {
+    transform: translateX(0); /* slide in */
+  }
 
   .navbar ul {
     flex-direction: column;
     gap: 0.8rem;
-    width: 90%;
-    padding: 2rem 0;
+    width: 85%;
+    padding: 8rem 0 3rem; /* top padding clears the header */
     background: transparent;
     align-items: center;
   }
 
-  .navbar ul li {
-    width: 100%;
-    text-align: center;
-  }
+  .navbar ul li { width: 100%; text-align: center; }
 
   .navbar ul li a {
     display: block;
@@ -1250,23 +1250,6 @@ img { max-width: 100%; display: block; }
     border-color: var(--accent) !important;
     color: #fff !important;
   }
-   
-/* Hide the checkbox itself */
-.nav-toggle-input {
-  display: none;
-}
-
-/* Show X icon when checked */
-.nav-toggle-input:checked + .icon i {
-  /* FontAwesome swap via content */
-}
-.nav-toggle-input:checked ~ .navbar {
-  top: 6rem; /* slide nav down */
-}
-
-/* Optional: show X character when open */
-.nav-toggle-input:checked + .icon i::before {
-  content: "\f00d"; /* FontAwesome fa-xmark unicode */
 }
 
   /* Hero adjustments */

@@ -17,25 +17,21 @@
     <!-- ===== HEADER ===== -->
   <header class="header fixed-top">
   <a href="#home" class="logo">TC<span class="logo-dot">.</span></a>
-
-  <!-- Hidden checkbox — the CSS toggle mechanism -->
-  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
-  <label for="nav-toggle" class="icon" aria-label="Toggle navigation">
-    <i class="fas fa-bars"></i>
-  </label>
-
-  <nav class="navbar">
-    <ul>
-      <li><a href="#home" onclick="document.getElementById('nav-toggle').checked=false">Home</a></li>
-      <li><a href="#about" onclick="document.getElementById('nav-toggle').checked=false">About</a></li>
-      <li><a href="#service" onclick="document.getElementById('nav-toggle').checked=false">Services</a></li>
-      <li><a href="#experience" onclick="document.getElementById('nav-toggle').checked=false">Timeline</a></li>
-      <li><a href="#portfolio" onclick="document.getElementById('nav-toggle').checked=false">Projects</a></li>
-      <li><a href="#contact" onclick="document.getElementById('nav-toggle').checked=false">Contact</a></li>
-      <li><a href="https://www.linkedin.com/in/tadiwanashe-chopamba-9b80b5289" target="_blank" class="nav-cta">Hire Me</a></li>
-    </ul>
-  </nav>
+  <div class="icon" id="nav-toggle-btn"><i class="fas fa-bars"></i></div>
 </header>
+
+<!-- Navbar is NOW OUTSIDE the header — fixes the fixed-inside-fixed bug -->
+<nav class="navbar" id="mobile-nav">
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#service">Services</a></li>
+    <li><a href="#experience">Timeline</a></li>
+    <li><a href="#portfolio">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/in/tadiwanashe-chopamba-9b80b5289" target="_blank" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
 
     <!-- ===== /HEADER ===== -->
 
@@ -496,40 +492,36 @@
     <!-- ===== SCRIPTS ===== -->
     <script src="code.jquery.com_jquery-3.7.0.js"></script>
     <script>
-     $(document).ready(function () {
+    $(document).ready(function () {
 
-  var isNavOpen = false; // single source of truth
+  var isNavOpen = false;
 
   function openNav() {
     isNavOpen = true;
-    $(".header .navbar").addClass("tog");
-    $(".icon i").removeClass("fa-bars").addClass("fa-xmark");
+    $("#mobile-nav").addClass("tog");
+    $("#nav-toggle-btn i").removeClass("fa-bars").addClass("fa-xmark");
+    $("body").css("overflow", "hidden"); // prevent background scroll
   }
 
   function closeNav() {
     isNavOpen = false;
-    $(".header .navbar").removeClass("tog");
-    $(".icon i").removeClass("fa-xmark").addClass("fa-bars");
+    $("#mobile-nav").removeClass("tog");
+    $("#nav-toggle-btn i").removeClass("fa-xmark").addClass("fa-bars");
+    $("body").css("overflow", ""); // restore scroll
   }
 
-  // Hamburger click — stopPropagation prevents bubbling to $(document)
-  $(".icon").click(function (e) {
+  $("#nav-toggle-btn").click(function (e) {
     e.stopPropagation();
     isNavOpen ? closeNav() : openNav();
   });
 
-  // Close on any nav link click
   $(".navbar ul li a").click(function () {
     closeNav();
   });
 
-  // Debounce utility
   function debounce(fn, delay) {
     var timer;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(fn, delay);
-    };
+    return function () { clearTimeout(timer); timer = setTimeout(fn, delay); };
   }
 
   var lastScroll = $(window).scrollTop();
@@ -537,49 +529,37 @@
   $(window).scroll(debounce(function () {
     var currentScroll = $(window).scrollTop();
     var delta = Math.abs(currentScroll - lastScroll);
-    lastScroll = currentScroll; // always update first
+    lastScroll = currentScroll;
 
-    // Use the FLAG — no DOM query, immune to layout shift
-    if (isNavOpen && delta > 8) {
-      closeNav();
-    }
+    if (isNavOpen && delta > 8) { closeNav(); }
 
-    // Scrolled header — completely independent, no nav logic here
     if (currentScroll > 50) {
       $(".header").addClass("scrolled");
     } else {
       $(".header").removeClass("scrolled");
     }
-
   }, 40));
 
-  // Close on outside click — stopPropagation on .icon prevents double-fire
   $(document).click(function (e) {
-    if (isNavOpen && !$(e.target).closest(".header").length) {
+    if (isNavOpen && !$(e.target).closest("#mobile-nav, #nav-toggle-btn").length) {
       closeNav();
     }
   });
 
-  /* ── PORTFOLIO FILTER ── */
+  /* Portfolio filter */
   $(".buttons").click(function () {
     var filter = $(this).attr("data-filter");
-    if (filter === "all") {
-      $(".filter-image").show();
-    } else {
-      $(".filter-image").not("." + filter).hide();
-      $(".filter-image").filter("." + filter).show();
-    }
+    if (filter === "all") { $(".filter-image").show(); }
+    else { $(".filter-image").not("." + filter).hide(); $(".filter-image").filter("." + filter).show(); }
     $(this).addClass("active").siblings().removeClass("active");
   });
 
-  /* ── SKILL BAR ANIMATION ── */
+  /* Skill bar animation */
   function animateSkills() {
     $(".skill-fill").each(function () {
       var pos = $(this).closest(".skill-item").offset().top;
       var scroll = $(window).scrollTop() + $(window).height();
-      if (scroll > pos) {
-        $(this).addClass("animated");
-      }
+      if (scroll > pos) { $(this).addClass("animated"); }
     });
   }
   $(window).scroll(animateSkills);

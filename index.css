@@ -172,11 +172,16 @@ img { max-width: 100%; display: block; }
 }
 .logo-dot { color: var(--accent); }
 
-.navbar.tog {
-    transform: translateX(0); /* slide in */
+.navbar {
+    width: 100%;
+    z-index: 1000;
+   position:relative;
   }
 
 .navbar ul {
+  position: absolute;
+  top:3.6rem;
+  right:1.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;

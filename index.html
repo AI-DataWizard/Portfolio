@@ -542,6 +542,7 @@
     // Scrolled header class — completely separate, no nav interaction
     if (currentScroll > 50) {
       $(".header").addClass("scrolled");
+      closeNav();
     } else {
       $(".header").removeClass("scrolled");
     }

@@ -181,7 +181,7 @@ img { max-width: 100%; display: block; }
     background: transparent;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
   }
@@ -189,7 +189,7 @@ img { max-width: 100%; display: block; }
 
 .navbar ul {
   position: fixed; 
-  top: 2.4rem;
+  top: 1.5rem;
   right: 2rem;
   z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
   display: flex;

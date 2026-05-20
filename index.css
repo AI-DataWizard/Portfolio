@@ -191,7 +191,7 @@ img { max-width: 100%; display: block; }
   position: fixed; 
   top: 1.25rem;
   right: 2rem;
-  z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
+  z-index: 1031; /* just under Bootstrap's fixed-top 1030 */
   display: flex;
   align-items: center;
   justify-content: center;

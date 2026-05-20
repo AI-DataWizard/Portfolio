@@ -529,29 +529,22 @@
   var lastScroll = $(window).scrollTop();
 
   $(window).scroll(debounce(function () {
-    var currentScroll = $(window).scrollTop();
-    var delta = Math.abs(currentScroll - lastScroll);
+  var currentScroll = $(window).scrollTop();
+  var delta = Math.abs(currentScroll - lastScroll);
+  lastScroll = currentScroll; // ← update FIRST, before any conditionals
 
-    // ONLY close nav if: nav is open AND real scroll movement happened
-    if ($(".header .navbar").hasClass("tog") && delta > 10) {
-      closeNav();
-    }
+  // Close nav only if: open AND genuine scroll movement
+  if ($(".header .navbar").hasClass("tog") && delta > 10) {
+    closeNav();
+  }
 
-    lastScroll = currentScroll;
-
-    // Scrolled header class — completely separate, no nav interaction
-    if (currentScroll > 50) {
-      $(".header").addClass("scrolled");
-      closeNav();
-    } else {
-      $(".header").removeClass("scrolled");
-    }
-
-   if ($(".header").hasClass(".scrolled") && $(".header .navbar").hasClass("tog")){
-      closeNav();
-    }
-
-  }, 50)); // 50ms debounce — smooth but responsive
+  // Header scroll class — NO closeNav() call here at all
+  if (currentScroll > 50) {
+    $(".header").addClass("scrolled");
+  } else {
+    $(".header").removeClass("scrolled");
+  }
+}, 50));
 
   // Keep skill animation on a separate, undebounced scroll listener
   $(window).scroll(animateSkills);

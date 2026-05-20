@@ -489,56 +489,85 @@
     <!-- ===== SCRIPTS ===== -->
     <script src="code.jquery.com_jquery-3.7.0.js"></script>
     <script>
-      $(document).ready(function () {
-        /* Mobile nav toggle */
-        var i = 0;
-        $(".icon").click(function () {
-          $(".header .navbar").toggleClass("tog");
-          if (i % 2 == 0) { $(".fa-bars").toggleClass("fa-xmark"); }
-          else { $(".fa-xmark").toggleClass("fa-bars"); }
-          i++;
-        });
-        $(".navbar ul li a").click(function () {
-          $(".header .navbar").removeClass("tog");
-          $(".fa-xmark").addClass("fa-bars").removeClass("fa-xmark");
-          i = 0;
-        });
+     $(document).ready(function () {
 
-        /* Portfolio filter */
-        $(".buttons").click(function () {
-          var filter = $(this).attr("data-filter");
-          if (filter === "all") {
-            $(".filter-image").show();
-          } else {
-            $(".filter-image").not("." + filter).hide();
-            $(".filter-image").filter("." + filter).show();
-          }
-          $(this).addClass("active").siblings().removeClass("active");
-        });
+  /* ── MOBILE NAV TOGGLE ── */
+  function openNav() {
+    $(".header .navbar").addClass("tog");
+    $(".icon i").removeClass("fa-bars").addClass("fa-xmark");
+  }
 
-        /* Scroll-activated header */
-        $(window).scroll(function () {
-          if ($(this).scrollTop() > 50) {
-            $(".header").addClass("scrolled");
-          } else {
-            $(".header").removeClass("scrolled");
-          }
-        });
+  function closeNav() {
+    $(".header .navbar").removeClass("tog");
+    $(".icon i").removeClass("fa-xmark").addClass("fa-bars");
+  }
 
-        /* Animate skill bars on scroll into view */
-        function animateSkills() {
-          $(".skill-fill").each(function () {
-            var pos = $(this).closest(".skill-item").offset().top;
-            var scroll = $(window).scrollTop() + $(window).height();
-            if (scroll > pos) {
-              $(this).css("width", $(this).css("--w") || $(this).parent().attr("data-w"));
-              $(this).addClass("animated");
-            }
-          });
-        }
-        $(window).scroll(animateSkills);
-        animateSkills();
-      });
+  // Hamburger / X click
+  $(".icon").click(function () {
+    if ($(".header .navbar").hasClass("tog")) {
+      closeNav();
+    } else {
+      openNav();
+    }
+  });
+
+  // Close on ANY nav link click (not just home)
+  $(".navbar ul li a").click(function () {
+    closeNav();
+  });
+
+  // Close on scroll (more than 10px movement)
+  var lastScroll = 0;
+  $(window).scroll(function () {
+    var currentScroll = $(this).scrollTop();
+
+    // Close nav if open and user scrolls
+    if (Math.abs(currentScroll - lastScroll) > 10) {
+      closeNav();
+    }
+    lastScroll = currentScroll;
+
+    // Scrolled header background
+    if (currentScroll > 50) {
+      $(".header").addClass("scrolled");
+    } else {
+      $(".header").removeClass("scrolled");
+    }
+  });
+
+  // Close nav if user clicks outside of it
+  $(document).click(function (e) {
+    if (!$(e.target).closest(".header").length) {
+      closeNav();
+    }
+  });
+
+  /* ── PORTFOLIO FILTER ── */
+  $(".buttons").click(function () {
+    var filter = $(this).attr("data-filter");
+    if (filter === "all") {
+      $(".filter-image").show();
+    } else {
+      $(".filter-image").not("." + filter).hide();
+      $(".filter-image").filter("." + filter).show();
+    }
+    $(this).addClass("active").siblings().removeClass("active");
+  });
+
+  /* ── ANIMATE SKILL BARS ON SCROLL ── */
+  function animateSkills() {
+    $(".skill-fill").each(function () {
+      var pos = $(this).closest(".skill-item").offset().top;
+      var scroll = $(window).scrollTop() + $(window).height();
+      if (scroll > pos) {
+        $(this).addClass("animated");
+      }
+    });
+  }
+  $(window).scroll(animateSkills);
+  animateSkills();
+
+});
     </script>
     <script src="all.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>

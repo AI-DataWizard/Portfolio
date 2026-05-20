@@ -176,13 +176,12 @@ img { max-width: 100%; display: block; }
 .navbar {
    width: 100%;
    z-index: 1000;
-   position:relative;
+   position: fixed;
+   op:2.4rem;
+   right:2rem;
   }
 
 .navbar ul {
-  position: fixed;
-  top:2.4rem;
-  right:2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;

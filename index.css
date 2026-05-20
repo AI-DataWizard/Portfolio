@@ -172,6 +172,10 @@ img { max-width: 100%; display: block; }
 }
 .logo-dot { color: var(--accent); }
 
+.navbar.tog {
+    transform: translateX(0); /* slide in */
+  }
+
 .navbar ul {
   display: flex;
   align-items: center;

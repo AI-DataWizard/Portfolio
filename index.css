@@ -147,6 +147,9 @@ img { max-width: 100%; display: block; }
    HEADER
    ===================================================== */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   display: flex;
   align-items: center;
@@ -161,7 +164,7 @@ img { max-width: 100%; display: block; }
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--border);
-  z-index: 999;
+  z-index: 1000; /* keep same as base header — never drop it */
 }
 
 .logo {
@@ -173,29 +176,22 @@ img { max-width: 100%; display: block; }
 }
 .logo-dot { color: var(--accent); }
 
-  .navbar {
-    position: fixed;
-    top: 1.25rem;
-    right: 2rem;
-    width: 100%;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto;
-  }
-
-
-.navbar ul {
-  position: fixed; 
-  top: 1.25rem;
-  right: 2rem;
-  z-index: 1031; /* just under Bootstrap's fixed-top 1030 */
+/* ── Desktop navbar: sits inside the fixed header flow ── */
+.navbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  background: transparent;
+  /* No position:fixed here — the header is already fixed */
+}
+
+.navbar ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
+  /* Remove any fixed/absolute positioning — let flexbox handle layout */
+  position: static;
 }
 
 .navbar ul li a {
@@ -1207,13 +1203,12 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 768px) {
-   /* Mobile Nav */
-   .header { padding: 1.6rem 2rem; }
+  /* Mobile Nav */
+  .header { padding: 1.6rem 2rem; }
 
   .fa-bars, .fa-xmark { display: block; }
 
-  /* Navbar is now a sibling of header, not a child */
-  /* position:fixed now works correctly — references the viewport */
+  /* Hide desktop nav links; show full-screen overlay instead */
   .navbar {
     position: fixed;
     top: 0;
@@ -1221,24 +1216,24 @@ img { max-width: 100%; display: block; }
     width: 100vw;
     height: 100vh;
     background: var(--navy);
-    z-index: 1029; /* just under Bootstrap's fixed-top 1030 */
+    z-index: 1029;
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateX(-100%); /* slide from left instead of top */
+    transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
   }
 
   .navbar.tog {
-    transform: translateX(0); /* slide in */
+    transform: translateX(0);
   }
 
   .navbar ul {
     flex-direction: column;
     gap: 0.8rem;
     width: 85%;
-    padding: 8rem 0 3rem; /* top padding clears the header */
+    padding: 8rem 0 3rem;
     background: transparent;
     align-items: center;
     position: static;
@@ -1271,7 +1266,6 @@ img { max-width: 100%; display: block; }
     border-color: var(--accent) !important;
     color: #fff !important;
   }
-}
 
   /* Hero adjustments */
   .hero-content { padding: 0 2rem; padding-top: 11rem; }

@@ -177,18 +177,23 @@ img { max-width: 100%; display: block; }
 .logo-dot { color: var(--accent); }
 
 /* ── Desktop navbar: sits inside the fixed header flow ── */
+/* Override Bootstrap's .navbar padding/margin that throws off vertical alignment */
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   background: transparent;
-  /* No position:fixed here — the header is already fixed */
+  padding: 0;        /* Bootstrap sets padding-top/bottom — zero it out */
+  margin: 0;         /* Remove any Bootstrap margin */
+  min-height: unset; /* Bootstrap sets a min-height that misaligns the bar */
+  position: static;  /* Ensure no residual positioning */
+  flex-wrap: nowrap;
 }
 
 .navbar ul {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 0.5rem;
   /* Remove any fixed/absolute positioning — let flexbox handle layout */
   position: static;

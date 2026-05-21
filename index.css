@@ -179,24 +179,21 @@ img { max-width: 100%; display: block; }
 /* ── Desktop navbar: sits inside the fixed header flow ── */
 /* ── Desktop navbar: fixed alongside the header ── */
 .site-nav {
-  position: fixed;           /* sits in the same layer as .header */
+  position: fixed;
   top: 0;
-  right: 0;                  /* anchored to the right of the viewport */
-  height: auto;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   background: transparent;
-  padding: 0 5rem 0 0;       /* matches .header right padding */
+  padding: 0 5rem 0 0;   /* right padding matches .header's 5rem */
   margin: 0;
-  z-index: 1000;             /* same z-index as .header — they share the bar */
+  z-index: 1000;
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  pointer-events: auto;
 }
 
-/* When header scrolls, nav background must match */
-.header.scrolled ~ .site-nav,
-.site-nav.scrolled {
+/* Sync scrolled background with header */
+.header.scrolled ~ .site-nav {
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
 }
@@ -205,11 +202,10 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.8rem 0;         /* matches .header top/bottom padding */
+  padding: 0;            /* zero out — let .header's own height dictate vertical space */
   margin: 0;
   list-style: none;
   position: static;
-  background: transparent;
 }
 
 .site-nav ul li a {
@@ -1248,15 +1244,17 @@ img { max-width: 100%; display: block; }
     transform: translateX(0);
   }
 
-  .site-nav ul {
-    flex-direction: column;
-    gap: 0.8rem;
-    width: 85%;
-    padding: 8rem 0 3rem;
-    background: transparent;
-    align-items: center;
-    position: static;
-  }
+.site-nav ul {
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 85%;
+  max-width: 40rem;        /* prevents stretching on wider mobile/tablet */
+  padding: 0;              /* remove the 8rem top padding — use margin-top instead */
+  margin: 8rem auto 3rem;  /* auto left/right = true horizontal centering */
+  align-items: center;
+  position: static;
+}
+
 
   .site-nav ul li { width: 100%; text-align: center; }
 

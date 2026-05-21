@@ -1247,7 +1247,7 @@ img { max-width: 100%; display: block; }
 .site-nav ul {
   flex-direction: column;
   gap: 0.8rem;
-  width: 85%;
+  width: 100%;
   max-width: 40rem;        /* prevents stretching on wider mobile/tablet */
   padding: 0;              /* remove the 8rem top padding — use margin-top instead */
   margin: 8rem auto 3rem auto;  /* auto left/right = true horizontal centering */

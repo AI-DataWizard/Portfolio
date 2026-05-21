@@ -1250,9 +1250,11 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 45rem;        /* prevents stretching on wider mobile/tablet */
   padding: 0;              /* remove the 8rem top padding — use margin-top instead */
-  margin: 5rem auto;  /* auto left/right = true horizontal centering */
-  align-items: center;
-  position: static;
+  margin: 5rem auto; /* auto left/right = true horizontal centering */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 

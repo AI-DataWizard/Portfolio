@@ -646,11 +646,15 @@
         }
 
         // Scrolled header class — completely separate, no nav logic
-        if (currentScroll > 50) {
-          $(".header").addClass("scrolled");
-        } else {
-          $(".header").removeClass("scrolled");
-        }
+    if (currentScroll > 50) {
+      $(".header").addClass("scrolled");
+      $("#mobile-nav").addClass("scrolled");   // ← ADD THIS LINE
+    } else {
+      $(".header").removeClass("scrolled");
+      $("#mobile-nav").removeClass("scrolled"); // ← ADD THIS LINE
+    }
+
+      
 
       }, 40));
 

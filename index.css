@@ -186,7 +186,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: flex-end;
   background: transparent;
-  padding: 0 5rem 0 0;   /* right padding matches .header's 5rem */
+  padding: 1.8rem 5rem 1.8rem 0;   /* right padding matches .header's 5rem */
   margin: 0;
   z-index: 1000;
   transition: background 0.3s ease, box-shadow 0.3s ease;

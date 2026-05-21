@@ -177,37 +177,50 @@ img { max-width: 100%; display: block; }
 .logo-dot { color: var(--accent); }
 
 /* ── Desktop navbar: sits inside the fixed header flow ── */
-/* Override Bootstrap's .site-nav padding/margin that throws off vertical alignment */
+/* ── Desktop navbar: fixed alongside the header ── */
 .site-nav {
+  position: fixed;           /* sits in the same layer as .header */
+  top: 0;
+  right: 0;                  /* anchored to the right of the viewport */
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   background: transparent;
-  padding: 0;        /* Bootstrap sets padding-top/bottom — zero it out */
-  margin: 0;         /* Remove any Bootstrap margin */
-  min-height: unset; /* Bootstrap sets a min-height that misaligns the bar */
-  position: static;  /* Ensure no residual positioning */
-  flex-wrap: nowrap;
+  padding: 0 5rem 0 0;       /* matches .header right padding */
+  margin: 0;
+  z-index: 1000;             /* same z-index as .header — they share the bar */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  pointer-events: auto;
+}
+
+/* When header scrolls, nav background must match */
+.header.scrolled ~ .site-nav,
+.site-nav.scrolled {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
 }
 
 .site-nav ul {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 1.1rem 1.3rem;
   gap: 0.5rem;
-  /* Remove any fixed/absolute positioning — let flexbox handle layout */
+  padding: 1.8rem 0;         /* matches .header top/bottom padding */
+  margin: 0;
+  list-style: none;
   position: static;
+  background: transparent;
 }
 
 .site-nav ul li a {
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--text-2);
-  padding: 1rem 1.4rem;
+  padding: 0.6rem 1.2rem;
   border-radius: var(--radius-sm);
   transition: var(--transition);
   text-transform: none;
+  white-space: nowrap;
 }
 
 .site-nav ul li a:hover {

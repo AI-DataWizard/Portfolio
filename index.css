@@ -912,28 +912,84 @@ img { max-width: 100%; display: block; }
 .img-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
+  background: transparent; /* no dark cover — image stays fully visible */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end; /* panel anchored to bottom */
+  opacity: 1; /* always visible — panel does the hiding */
+  pointer-events: none;
 }
 
-.img-wrap:hover .img-overlay { opacity: 1; }
+/* The panel itself slides up */
+.img-overlay::after {
+  display: none;
+} /* remove any pseudo interference */
 
-.img-overlay span {
-  font-size: 1.6rem;
-  font-weight: 600;
+.img-wrap:hover .img-overlay {
+  opacity: 1;
+}
+
+/* Panel slides up from bottom */
+.ov-panel {
+  background: rgba(10, 16, 35, 0.95);
+  backdrop-filter: blur(6px);
+  padding: 1.2rem 1.4rem;
+  transform: translateY(100%); /* starts hidden below the card */
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.img-wrap:hover .ov-panel {
+  transform: translateY(0); /* slides into view */
+}
+
+.ov-title {
+  font-size: 1.4rem;
+  font-weight: 700;
   color: #fff;
+  margin: 0;
   background: transparent;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
 
-.img-overlay i { background: transparent; }
+.ov-desc {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  background: transparent;
+  line-height: 1.3;
+}
+
+.ov-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  background: transparent;
+}
+
+.ov-tags span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 0.15rem 0.6rem;
+  border-radius: 99px;
+}
+
+.ov-cta {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  margin-top: 0.2rem;
+}
 
 .live-badge {
   position: absolute;
@@ -1303,6 +1359,22 @@ img { max-width: 100%; display: block; }
 
   /* Sections padding */
   .service, .experience, .portfolio, .contact { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+   /*Avoids img overlay details from cramping up*/
+     
+   .ov-panel {
+    padding: 1rem 1.2rem;
+  }
+  .ov-title {
+    font-size: 1.2rem;
+  }
+  .ov-desc {
+    display: none;
+  } /* too cramped on small cards — hide desc, keep tags+cta */
+  .ov-tags span {
+    font-size: 0.85rem;
+  }
+
 
   /* Contact form */
   .form-row { grid-template-columns: 1fr; }

@@ -533,7 +533,7 @@
         </div>
 
         <div class="col-md-7 offset-md-1">
-          <form action="https://formsubmit.co/tadiwachopambaweb@gmail.com" method="POST" class="contact-form">
+          <form class="contact-form">
             <div class="form-row">
               <div class="form-group">
                 <label>First Name</label>
@@ -694,6 +694,130 @@
       animateSkills();
 
     });
+    </script>
+    <!-- EmailJS SDK — loads the emailjs global object -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+      (function () {
+        //EmailJS global values — REPLACE these 3 placeholders with your actual values from emailjs.com
+        const EMAILJS_PUBLIC_KEY = "pEKjRsfqu93afAK7-"; // Account → General
+        const EMAILJS_SERVICE_ID = "service_cidwqnt"; // Email Services tab
+        const EMAILJS_TEMPLATE_ID = "template_nkpjnwc"; // Email Templates tab
+        // ───────────────────────────────────────────────────────────────────────
+
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+        // Wait for the DOM to be fully parsed before we touch any elements
+        document.addEventListener("DOMContentLoaded", function () {
+          // Select the form using its class.
+          // If you have multiple forms on the page, add an id to this one
+          // and use getElementById instead for extra precision.
+          const form = document.querySelector(".contact-form");
+
+          if (!form) {
+            console.warn(
+              "EmailJS: .contact-form element not found on this page."
+            );
+            return;
+          }
+
+          // Select the submit button so we can lock it during sending
+          const submitBtn = form.querySelector(".form-submit");
+
+          // ── Intercept the native form submission ─────────────────────────────
+          // 'submit' fires when the user clicks Send or presses Enter.
+          // e.preventDefault() cancels the browser's default behaviour —
+          // without this the form would POST to the formsubmit.co action URL
+          // instead of going through EmailJS.
+          form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // ── Collect field values using the name attributes on your inputs ──
+            // These match exactly: name="First Name", name="Last Name",
+            // name="E-mail", name="Message" as written in your HTML.
+            const firstName = form
+              .querySelector('[name="First Name"]')
+              .value.trim();
+            const lastName = form
+              .querySelector('[name="Last Name"]')
+              .value.trim();
+            const email = form.querySelector('[name="E-mail"]').value.trim();
+            const message = form.querySelector('[name="Message"]').value.trim();
+            const currentTime = new Date().toLocaleString(); // optional timestamp for debugging
+
+            // ── Client-side validation ────────────────────────────────────────
+            // Your fields already have the `required` attribute which handles
+            // empty fields natively, but we validate email format here because
+            // the browser's built-in check only catches obviously broken formats.
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+              alert("Please enter a valid email address.");
+              return;
+            }
+
+            // ── Lock the button to prevent duplicate submissions ───────────────
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              'Sending… <i class="fas fa-spinner fa-spin"></i>';
+
+            // ── Build the template params object ─────────────────────────────
+            // Each key maps to a {{placeholder}} in your EmailJS template.
+            // from_name  → {{from_name}}   shows "John Doe" in the email
+            // from_email → {{from_email}}  shows sender's address
+            // message    → {{message}}     shows the textarea content
+            // to_email   → {{to_email}}    set as To field in your template
+            const templateParams = {
+              from_name: `${firstName} ${lastName}`.trim(),
+              from_email: email,
+              message: message,
+              to_email: "tadiwachopambaweb@gmail.com",
+              time: currentTime,
+            };
+
+            // ── Send via EmailJS ──────────────────────────────────────────────
+            // emailjs.send(serviceID, templateID, params) returns a Promise.
+            // We await it inside try/catch so both success and failure are
+            // handled cleanly — identical pattern to HakuAnime's contact page.
+            try {
+              await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams
+              );
+
+              // ── Success ───────────────────────────────────────────────────
+              // Change the button to a confirmation state for 3 seconds,
+              // then reset the form and restore the button.
+              submitBtn.innerHTML = 'Sent! ✓ <i class="fas fa-check"></i>';
+              submitBtn.style.background = "#4caf50"; // brief green confirmation
+
+              setTimeout(function () {
+                form.reset(); // clears all fields
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = ""; // restores original colour
+              }, 3000);
+            } catch (error) {
+              // ── Failure ───────────────────────────────────────────────────
+              // Log the full error for debugging, show a human-readable message.
+              // error.text is the reason string EmailJS returns
+              // (e.g. "The Public Key is invalid", "Daily quota exceeded").
+              console.error("EmailJS error:", error);
+              alert(
+                `Failed to send message: ${
+                  error.text || "Unknown error. Please try again."
+                }`
+              );
+
+              // Always restore the button so the user can try again
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          }); // end submit listener
+        }); // end DOMContentLoaded
+      })(); // end IIFE
     </script>
     <script src="all.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>

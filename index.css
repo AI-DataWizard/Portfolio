@@ -180,14 +180,14 @@ img { max-width: 100%; display: block; }
 /* ── Desktop navbar: fixed alongside the header ── */
 .site-nav {
   position: fixed;
-  top: 0;
+  top: 2.5rem;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   background: transparent;
   padding: 0 5rem 0 0;   /* right padding matches .header's 5rem */
-  margin-top: 2rem;
+  margin: 0;
   z-index: 1000;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }

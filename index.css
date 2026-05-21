@@ -1247,8 +1247,8 @@ img { max-width: 100%; display: block; }
 .site-nav ul {
   flex-direction: column;
   gap: 0.8rem;
-  width: 100%;
-  max-width: 45rem;        /* prevents stretching on wider mobile/tablet */
+  width: 90%;
+  max-width: 40rem;        /* prevents stretching on wider mobile/tablet */
   padding: 0;              /* remove the 8rem top padding — use margin-top instead */
   margin: 5rem auto; /* auto left/right = true horizontal centering */
     position: absolute;
@@ -1338,4 +1338,5 @@ img { max-width: 100%; display: block; }
   .hero-name { font-size: 3.5rem; }
   .images { grid-template-columns: 1fr; }
   .heading { font-size: 3rem; }
+   .site-nav ul {max-width:30rem;)
 }

@@ -1410,5 +1410,83 @@ img { max-width: 100%; display: block; }
   .hero-name { font-size: 3.5rem; }
   .images { grid-template-columns: 1fr; }
   .heading { font-size: 3rem; }
-   .site-nav ul {max-width:30rem;)
+   .site-nav ul {max-width:30rem;}
+}
+
+/* ==========================================================================
+   P-9 Nov 2026 — featured projects, capability blocks, touch-safe overlays
+   ========================================================================== */
+
+/* Capability blocks (replaced the self-scored skill bars) */
+.skills-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+.cap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 1.4rem 1.6rem;
+}
+.cap h4 { font-size: 1.25rem; margin: 0 0 .5rem; color: var(--text); }
+.cap p  { font-size: 1.15rem; margin: 0; color: var(--muted, rgba(255,255,255,.68)); line-height: 1.45; }
+
+/* Featured pair — the two projects a visitor can use right now.
+   Fixed-count tracks (never auto-fit) so the mobile rules stay predictable. */
+.featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  max-width: 120rem;
+  margin: 0 auto 2.4rem;
+}
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .3s ease, border-color .3s ease;
+}
+.feature-card:hover,
+.feature-card:focus-visible { transform: translateY(-4px); border-color: var(--accent); }
+.feature-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.fc-media { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--surface); }
+.fc-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.feature-card:hover .fc-media img { transform: scale(1.04); }
+.fc-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  font-size: .95rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  background: rgba(5,150,105,.95); color: #fff;
+  padding: .3rem .7rem; border-radius: 99px;
+}
+.fc-body { padding: 1.6rem 1.8rem 1.8rem; display: flex; flex-direction: column; gap: .7rem; }
+.fc-body h3 { font-size: 1.7rem; margin: 0; }
+.fc-out { font-size: 1.2rem; line-height: 1.45; margin: 0; color: rgba(255,255,255,.82); }
+.fc-points { margin: .2rem 0 0; padding-left: 1.6rem; display: flex; flex-direction: column; gap: .35rem; }
+.fc-points li { font-size: 1.1rem; line-height: 1.4; color: rgba(255,255,255,.7); }
+.fc-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .6rem; flex-wrap: wrap; }
+.fc-stack { font-size: 1.02rem; color: rgba(255,255,255,.55); }
+.fc-cta { font-size: 1.1rem; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: .45rem; }
+
+/* Touch devices: the hover panel never appears, so show it by default.
+   This is the fix for "description only exists on hover". */
+@media (hover: none) {
+  .ov-panel { transform: translateY(0); }
+  .img-wrap:hover img { transform: none; }
+}
+
+/* Keyboard parity with hover */
+.img-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.img-wrap:focus-visible .ov-panel { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card, .fc-media img, .img-wrap img, .ov-panel { transition: none !important; }
+  .feature-card:hover { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .featured { grid-template-columns: 1fr; }
+  .fc-body { padding: 1.4rem 1.5rem 1.6rem; }
 }
